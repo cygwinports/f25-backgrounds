@@ -1,0 +1,42 @@
+NAME="f25-backgrounds"
+VERSION=25.1.1
+RELEASE=1
+CATEGORY="X11"
+SUMMARY="Fedora 25 desktop wallpaper"
+DESCRIPTION="Default wallpaper for the Fedora 25 release, along with a
+collection of selected wallpapers contributed by the Fedora community."
+HOMEPAGE="https://fedoraproject.org/wiki/Design"
+SRC_URI="https://fedorahosted.org/released/design-team/${NAME}-${VERSION}.tar.xz"
+SRC_DIR=${NAME}
+
+ARCH=noarch
+
+PKG_NAMES="${NAME} ${NAME}-extras"
+f25_backgrounds_DOCS="Attribution CC-BY-SA-4.0"
+f25_backgrounds_CONTENTS="
+	usr/share/backgrounds/f25/default/
+	usr/share/backgrounds/xfce/f25.png
+	usr/share/gnome-background-properties/f25.xml
+	usr/share/mate-background-properties/f25.xml
+	usr/share/wallpapers/F25/
+"
+f25_backgrounds_extras_SUMMARY="Fedora 25 extra wallpapers"
+f25_backgrounds_extras_DOCS="Attribution-Extras CC-BY-SA-4.0"
+f25_backgrounds_extras_CONTENTS="
+	usr/share/backgrounds/f25/extras/
+	usr/share/backgrounds/xfce/f25-*
+	usr/share/gnome-background-properties/f25-extras.xml
+	usr/share/mate-background-properties/f25-extras.xml
+	usr/share/wallpapers/F25_*/
+"
+
+src_compile() {
+	cd ${S}
+	cygmake
+}
+
+src_install() {
+	cd ${S}
+	cyginstall
+	mv ${D}/usr/share/{xfce4/backdrops,backgrounds/xfce}
+}
